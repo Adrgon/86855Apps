@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View, ScrollView, FlatList, TouchableOpacity, Alert, Modal } from 'react-native';
+import { colors } from './app/constants/colors';
+
+
 
 const productsExample = [
   { id: 1, value: "Mate" },
@@ -24,12 +27,13 @@ const productsExample = [
 export default function App() {
 
   const [textItem, setTextItem] = useState("")
-  const [itemList, setItemList] = useState(productsExample)
+  const [itemList, setItemList] = useState(productsExample);
   const [modalVisible, setModalVisible] = useState(false)
   const [itemSelected, setItemSelected] = useState({})
 
+
   const handleChangeText = (text) => {
-    console.log(text)
+    console.error(text)
     setTextItem(text) 
   }
 
@@ -40,7 +44,10 @@ export default function App() {
 
   const handleDelete = () => {
     console.log("borrar")
-      const filter = itemList.filter((item) => item.id !== itemSelected.id);
+      const filter = itemList.filter((item) => {
+        console.log(item)
+        return item.id !== itemSelected.id
+      });
       setItemList(filter);
       setModalVisible(false);
   }
@@ -64,7 +71,7 @@ export default function App() {
           onChangeText={handleChangeText}
           style={styles.input}
         />
-        <Button title="Agregar" color="#5555ff" onPress={addItem} />
+        <Button title="Agregar" color={colors.purple} onPress={addItem} />
       </View>
       <View style={styles.productsContainer}>
         <FlatList
@@ -89,8 +96,16 @@ export default function App() {
             <Text>{itemSelected.value}</Text>
           </View>
           <View style={styles.btnContainer}>
-            <Button title="Borrar" color="#ff5555" onPress={handleDelete}/>
-            <Button title="Cancelar" color="#55ff55" onPress={handleCancelModal} />
+            <Button
+              title="Borrar"
+              color={colors.purple}
+              onPress={handleDelete}
+            />
+            <Button
+              title="Cancelar"
+              color="#55ff55"
+              onPress={handleCancelModal}
+            />
           </View>
         </View>
       </Modal>
@@ -101,7 +116,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#888",
+    backgroundColor: colors.darkPurple,
     alignItems: "center",
     justifyContent: "center",
     paddingTop: 100,
@@ -119,7 +134,7 @@ const styles = StyleSheet.create({
   },
   product: {
     alignItems: "center",
-    backgroundColor: "#cccccc",
+    backgroundColor: colors.darkSalmon,
     borderRadius: 5,
     justifyContent: "center",
     marginVertical: 10,
@@ -137,7 +152,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   modalContainer: {
-    backgroundColor: "white",
+    backgroundColor: colors.salmon,
     width: "80%",
     alignContent: "center",
     gap: 20,
