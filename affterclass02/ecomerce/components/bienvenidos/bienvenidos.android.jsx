@@ -11,4 +11,6 @@ const Bienvenidos = () => {
 
 export default Bienvenidos
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    
+})
