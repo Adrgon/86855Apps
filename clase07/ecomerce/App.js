@@ -4,16 +4,21 @@ import Header from './src/components/Header';
 import Home from './src/screens/Home';
 import ItemListCategory from './src/screens/ItemListCategory';
 import ItemDetail from './src/screens/ItemDetail';
+import { useState } from 'react';
 
 
 export default function App() {
+  const [categorySelected, setCategorySelected] = useState("");
 
   return (
     <View style={styles.container}>
       <Header title={"Titulo de la Aplicacion"} />
-      <Home />
-      <ItemListCategory />
-      <ItemDetail />
+      {!categorySelected ? (
+        <Home setCategorySelected={setCategorySelected} />
+      ) : (
+        <ItemListCategory categorySelected={categorySelected} setCategorySelected={setCategorySelected} />
+      )}
+      {/*       <ItemDetail /> */}
     </View>
   );
 }
