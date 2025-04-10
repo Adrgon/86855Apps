@@ -1,11 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, useWindowDimensions } from 'react-native'
 import React from 'react'
 import { colors } from '../global/colors'
 
 const Header = ({title}) => {
+  const { height, width } = useWindowDimensions();
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{title}</Text>
+      <Text style={width > 360 ? styles.text : styles.textSm}>{title}</Text>
     </View>
   )
 }
@@ -17,11 +18,17 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 70,
     backgroundColor: colors.teal900,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
   text: {
     color: colors.teal200,
+    fontFamily: "Josefin",
     fontSize: 24,
-  }
-})
+  },
+  textSm: {
+    color: colors.teal200,
+    fontFamily: "Josefin",
+    fontSize: 16,
+  },
+});

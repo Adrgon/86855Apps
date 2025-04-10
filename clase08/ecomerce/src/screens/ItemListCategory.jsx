@@ -4,29 +4,36 @@ import products from "../data/products.json"
 import Search from '../components/Search'
 import ProductItem from '../components/ProductItem'
 
-const ItemListCategory = ({categorySelected = "", setCategorySelected = ()=>{}}) => {
-  const [keyWord, setKeyword] = useState("")
-  const [productsFiltered, setProductsFiltered] = useState([])
-  const [error, setError] = useState("")
+const ItemListCategory = ({
+  categorySelected = "",
+  setCategorySelected = () => {},
+  setItemIdSelected = () => {},
+}) => {
+  const [keyWord, setKeyword] = useState("");
+  const [productsFiltered, setProductsFiltered] = useState([]);
+  const [error, setError] = useState("");
 
   //console.log(categorySelected)
 
-  useEffect(()=>{
+  useEffect(() => {
     const regex = /\d/;
-    const hasDigits = (regex.test(keyWord))
+    const hasDigits = regex.test(keyWord);
     //console.log(hasDigits);
-    if(hasDigits) {
-      setError("No se permiten numeros")
-      return
+    if (hasDigits) {
+      setError("No se permiten numeros");
+      return;
     }
-    const productsPrefiltered = products.filter(product => product.category === categorySelected)
+    const productsPrefiltered = products.filter(
+      (product) => product.category === categorySelected
+    );
     //console.log(productsPrefiltered) // todos los de la categoria
-    const productsFilter = productsPrefiltered.filter(product => product.title.toLocaleLowerCase().includes(keyWord.toLocaleLowerCase()))
+    const productsFilter = productsPrefiltered.filter((product) =>
+      product.title.toLocaleLowerCase().includes(keyWord.toLocaleLowerCase())
+    );
     //console.log(productsFilter)
     setProductsFiltered(productsFilter);
-    setError("")
-
-  }, [keyWord, categorySelected])
+    setError("");
+  }, [keyWord, categorySelected]);
   return (
     <View>
       <Search
@@ -36,12 +43,14 @@ const ItemListCategory = ({categorySelected = "", setCategorySelected = ()=>{}})
       />
       <FlatList
         data={productsFiltered}
-        renderItem={({ item }) => <ProductItem product={item} />}
+        renderItem={({ item }) => (
+          <ProductItem product={item} setItemIdSelected={setItemIdSelected} />
+        )}
         keyExtractor={(producto) => producto.id}
       />
     </View>
   );
-}
+};
 
 export default ItemListCategory
 
