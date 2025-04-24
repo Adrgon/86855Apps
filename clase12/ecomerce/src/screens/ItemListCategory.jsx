@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import {colors} from '../global/colors';
-import products from "../data/products.json"
+//import products from "../data/products.json"
 import Search from '../components/Search'
 import ProductItem from '../components/ProductItem'
+import { useGetProductsByCategoryQuery } from '../services/shopServices';
 
 const ItemListCategory = ({
   navigation,
@@ -14,6 +15,13 @@ const ItemListCategory = ({
   const [error, setError] = useState("");
 
   const {category: categorySelected} = route.params
+  const {
+    data: productFetched, 
+    error: errorFromFetch, 
+    isLoading 
+  } = useGetProductsByCategoryQuery(categorySelected)
+
+  console.log(productFetched)
   
   useEffect(() => {
     const regex = /\d/;
@@ -22,15 +30,17 @@ const ItemListCategory = ({
       setError("No se permiten numeros");
       return;
     }
-    const productsPrefiltered = products.filter(
-      (product) => product.category === categorySelected
-    );
-    const productsFilter = productsPrefiltered.filter((product) =>
-      product.title.toLocaleLowerCase().includes(keyWord.toLocaleLowerCase())
-    );
-    setProductsFiltered(productsFilter);
-    setError("");
-  }, [keyWord, categorySelected]);
+
+    if(!isLoading) {
+      //console.log(productFetched)
+      const productsFilter = productFetched.filter((product) =>
+        product.title.toLocaleLowerCase().includes(keyWord.toLocaleLowerCase())
+      );
+      setProductsFiltered(productsFilter);
+      setError("");
+    }
+
+  }, [keyWord, categorySelected, productFetched, isLoading]);
   return (
     <View style={styles.flatListContainer}>
       <Search
