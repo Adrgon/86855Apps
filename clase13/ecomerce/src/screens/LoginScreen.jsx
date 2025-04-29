@@ -1,14 +1,28 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Pressable } from 'react-native'
 import { colors } from '../global/colors'
 import React, { useState } from "react";
+import InputForm from "../components/inputForm";
+import SubmitButton from "../components/submitButton";
+import { useDispatch } from 'react-redux';
+import { useSignInMutation } from '../services/authService';
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
 
+    const dispatch=useDispatch()
+    const [triggerSignIn, restul] = useSignInMutation()
+
+    // dispatch
+    // triggerSignIn
+
+    // useEffect
+       // setUser()
+
     const onSubmit = () => {
         // handle login logic here
-    };
+        // triggerSignIn({ email, password });
+    }
 
     return (
       <View style={styles.main}>

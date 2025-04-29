@@ -1,7 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, {useState} from 'react'
+import { StyleSheet, Text, View, Pressable } from 'react-native'
+import React, {useEffect, useState} from 'react'
+import { colors } from '../global/colors';
+import InputForm from "../components/inputForm";
+import SubmitButton from "../components/submitButton";
+import { useDispatch } from 'react-redux';
+import { useSignUpMutation } from '../services/authService';
+import { signupSchema } from '../validations/authSchema';
+import { setUser } from '../features/User/userSlice';
 
-const SignupScreen = () => {
+const SignupScreen = ({navigation}) => {
         const [email, setEmail] = useState("");
         const [errorMail, setErrorMail] = useState("");
         const [password, setPassword] = useState("");
@@ -9,7 +16,41 @@ const SignupScreen = () => {
         const [confirmPassword, setconfirmPassword] = useState("");
         const [errorConfirmPassword, setErrorConfirmPassword] = useState("");
 
-        const onSubmit = () => {}
+        const dispatch = useDispatch()
+
+        const [triggerSignUp, result] = useSignUpMutation()
+
+        useEffect(()=>{
+            if(result.isSuccess){
+            dispatch(
+              setUser({
+                email: result.data.email,
+                idToken: result.data.idToken,
+              })
+            );
+            }
+        },[result])
+
+        const onSubmit = () => {
+            try {
+                setErrorMail("");
+                setErrorPassword("")
+                setErrorConfirmPassword("")
+                signupSchema.validateSync({email, password, confirmPassword})
+                triggerSignUp({ email, password, returnSecureToken: true });
+            } catch (err) {
+                console.log("entro en el signup del error")
+                console.log(err)
+                switch (err.path) {
+                  case "email":
+                    setErrorMail(err.message);
+                    break;
+                  case "pasword":
+                    setErrorPassword(err.message);
+                    break;
+                }
+            }
+        }
 
 return (
   <View style={styles.main}>
