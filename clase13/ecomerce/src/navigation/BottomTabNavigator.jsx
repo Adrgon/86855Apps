@@ -1,17 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-
-import CartTemp from '../screens/Cart'
-import OrdersTemp from '../screens/Orders'
 import HomeStackNavigator from './HomeStackNavigator'
-
-import Header from '../components/Header'
 import { colors } from '../global/colors'
-
 import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import Header from '../components/Header'
 import CartStackNavigator from './CartStackNavigator'
 import OrderStackNavigator from './OrderStackNavigator'
 

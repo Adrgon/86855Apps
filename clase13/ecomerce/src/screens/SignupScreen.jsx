@@ -1,8 +1,10 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native'
 import React, {useEffect, useState} from 'react'
 import { colors } from '../global/colors';
+
 import InputForm from "../components/inputForm";
 import SubmitButton from "../components/submitButton";
+
 import { useDispatch } from 'react-redux';
 import { useSignUpMutation } from '../services/authService';
 import { signupSchema } from '../validations/authSchema';

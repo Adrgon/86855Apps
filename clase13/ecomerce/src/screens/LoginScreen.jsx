@@ -1,48 +1,53 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native'
+import React, { useState, useEffect } from "react";
 import { colors } from '../global/colors'
-import React, { useState } from "react";
 import InputForm from "../components/inputForm";
 import SubmitButton from "../components/submitButton";
-import { useDispatch } from 'react-redux';
 import { useSignInMutation } from '../services/authService';
+import { setUser} from "../features/User/userSlice"
+import { useDispatch } from "react-redux";
 
 const LoginScreen = ({navigation}) => {
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+  const dispatch = useDispatch();
+  const [triggerSignIn, result] = useSignInMutation();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
 
-    const dispatch=useDispatch()
-    const [triggerSignIn, restul] = useSignInMutation()
-
-    // dispatch
-    // triggerSignIn
-
-    // useEffect
-       // setUser()
-
-    const onSubmit = () => {
-        // handle login logic here
-        // triggerSignIn({ email, password });
+   useEffect(() => {
+    if (result.isSuccess) {
+      //console.log("🕵🏻 ~ useEffect ~ result:", result);
+      dispatch(
+        setUser({
+          email: result.data.email,
+          idToken: result.data.idToken,
+        })
+      );
     }
+  }, [result]); 
 
-    return (
-      <View style={styles.main}>
-        <View style={styles.container}>
-          <Text style={styles.title}>Login to start</Text>
-          <InputForm label={"email"} onChange={setEmail} error={""} />
-          <InputForm
-            label={"password"}
-            onChange={setPassword}
-            error={""}
-            isSecure={true}
-          />
-          <SubmitButton onPress={onSubmit} title="Send" />
-          <Text style={styles.sub}>Not have an account?</Text>
-          <Pressable onPress={() => navigation.navigate("Signup")}>
-            <Text style={styles.subLink}>Sign up</Text>
-          </Pressable>
-        </View>
+   const onSubmit = () => {
+    triggerSignIn({ email, password });
+  }; 
+
+  return (
+    <View style={styles.main}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Login to start</Text>
+        <InputForm label={"email"} onChange={setEmail} error={""} />
+        <InputForm
+          label={"password"}
+          onChange={setPassword}
+          error={""}
+          isSecure={true}
+        />
+        <SubmitButton onPress={onSubmit} title="Send" />
+        <Text style={styles.sub}>Not have an account?</Text>
+        <Pressable onPress={() => navigation.navigate("Signup")}>
+          <Text style={styles.subLink}>Sign up</Text>
+        </Pressable>
       </View>
-    );
+    </View>
+  );
 }
 
 export default LoginScreen
