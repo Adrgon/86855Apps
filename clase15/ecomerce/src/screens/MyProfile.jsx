@@ -13,7 +13,16 @@ const MyProfile = ({navigation}) => {
     const launchCamera = () => {
         navigation.navigate("Image Selector");
     }
+
+    const launchLocation = () => {
+      navigation.navigate("List Address");
+    };
+    
     const defaultImage = "../../assets/images/defaultProfile.png"
+
+
+
+    const signOut = () => { }
   
   return (
     <View style={styles.container}>
@@ -31,6 +40,8 @@ const MyProfile = ({navigation}) => {
         />
       )}
       <Button title="Add picture Profile" onPress={launchCamera} />
+      <Button title="My address" onPress={launchLocation} />
+      <Button title="Sign out" onPress={signOut} />
     </View>
   );
 }

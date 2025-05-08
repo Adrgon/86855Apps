@@ -4,7 +4,7 @@ import { baseURL } from "../databases/realtimeDatabase";
 export const shopApi = createApi({
   reducerPath: "shopApi",
   baseQuery: fetchBaseQuery({ baseUrl: baseURL }),
-  tagTypes: ["profileImageGet"], // Declarando un tag
+  tagTypes: ["profileImageGet", "locationGet"], // Declarando un tag
   endpoints: (builder) => ({
     getCategories: builder.query({
       query: () => "categories.json",
@@ -41,6 +41,23 @@ export const shopApi = createApi({
       }),
       invalidatesTags: ["profileImageGet"], //Invalidates will trigger a refetch on profileImageGet
     }),
+    getLocation: builder.query({
+      query: (localId) => `locations/${localId}.json`,
+      providesTags: ["locationGet"],
+    }),
+    postLocation: builder.mutation({
+      query: ({ location, localId }) => ({
+        url: `locations/${localId}.json`,
+        method: "PUT",
+        body: {
+          latitude: location.latitude,
+          longitude: location.longitude,
+          address: location.address,
+          updatedAt: location.updatedAt,
+        },
+      }),
+      invalidatesTags: ["locationGet"], //Invalidates will trigger a refetch on locationGet
+    })
   }),
 });
 
@@ -50,5 +67,7 @@ export const {
     useGetProductByIdQuery,
     usePostOrderMutation,
     useGetProfileImageQuery,
-    usePostProfileImageMutation
+    usePostProfileImageMutation,
+    useGetLocationQuery,
+    usePostLocationMutation,
 } = shopApi;
