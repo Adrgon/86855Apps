@@ -4,12 +4,19 @@ import { useFonts } from "expo-font";
 import Navigator from "./src/navigation/Navigator";
 import { Provider } from "react-redux";
 import store from "./src/store";
+import { useEffect } from "react";
+import { useDB } from "./src/hooks/useDb";
 
 const App = () => {
+  const {initDB} = useDB()
   const [fontsLoaded, fontError] = useFonts({
     Josefin: require("./assets/JosefinSans-Regular.ttf"),
     PlayFair: require("./assets/PlayfairDisplay-VariableFont_wght.ttf"),
   });
+
+  useEffect(()=>{
+    initDB()
+  }, [])
 
   if (!fontsLoaded || fontError) {
     return null;

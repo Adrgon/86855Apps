@@ -6,6 +6,8 @@ import SubmitButton from "../components/submitButton";
 import { useSignInMutation } from '../services/authService';
 import { setUser} from "../features/User/userSlice"
 import { useDispatch } from "react-redux";
+import { useDB } from '../hooks/useDb';
+
 
 const LoginScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -13,20 +15,34 @@ const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
+  const {insertSession} = useDB()
+
    useEffect(() => {
     if (result.isSuccess) {
-      //console.log("🕵🏻 ~ useEffect ~ result:", result);
-      dispatch(
+      (async ()=>{
+        try {
+          await insertSession({
+            localId: result.data.localId,
+            email: result.data.email,
+            token: result.data.idToken,
+          })
+          console.log("Session created", result.data)
+        dispatch(
         setUser({
           email: result.data.email,
           idToken: result.data.idToken,
           localId: result.data.localId,
         })
-      );
+      );    
+        }catch(err){
+          console.log(err)
+        }
+      })()
     }
   }, [result]); 
 
    const onSubmit = () => {
+    console.log("login")
     triggerSignIn({ email, password });
   }; 
 

@@ -1,11 +1,14 @@
 import { Button, Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useGetProfileImageQuery } from '../services/shopServices'
-
+import { useDB } from '../hooks/useDb'
+import { clearUser } from '../features/User/userSlice'
 const MyProfile = ({navigation}) => {
     const {imageCamera, localId} = useSelector(state => state.auth.value)
     const {data: imageFromBase} = useGetProfileImageQuery(localId)
+    const { truncateSessionTable } = useDB();
+    const dispatch = useDispatch()
     //console.log(imageCamera);
     //console.log(imageFromBase)
 
@@ -22,7 +25,16 @@ const MyProfile = ({navigation}) => {
 
 
 
-    const signOut = () => { }
+    const signOut = async () => { 
+      try {
+        const response = await truncateSessionTable();
+        console.log("Session table truncated", response)
+        dispatch(clearUser())
+
+      }catch(err){
+        console.log(err)
+      }
+    }
   
   return (
     <View style={styles.container}>
