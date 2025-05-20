@@ -6,7 +6,9 @@ import Card from './Card';
 
 const OrderItem = memo(({ order, navigation }) => {
   const handleNavigate = () => {
-    navigation.navigate("OrderDetail", { order });
+    if (navigation) {
+      navigation.navigate("OrderDetail", { order });
+    }
   };
 
   return (
@@ -15,7 +17,13 @@ const OrderItem = memo(({ order, navigation }) => {
         <Text style={styles.date}>{new Date(order.createdAt).toLocaleString()}</Text>
         <Text style={styles.total}>Total: ${order.total}</Text>
       </View>
-      <Pressable style={styles.detailsButton} onPress={handleNavigate}>
+      <Pressable 
+        style={({pressed}) => [
+          styles.detailsButton,
+          pressed && styles.detailsButtonPressed
+        ]} 
+        onPress={handleNavigate}
+      >
         <Feather name="search" size={24} color={colors.platinum} />
       </Pressable>
     </Card>
@@ -32,6 +40,9 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         backgroundColor: colors.teal600,
         padding: 16,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
     },
     textContainer: {
         flex: 1,
@@ -53,5 +64,9 @@ const styles = StyleSheet.create({
         padding: 8,
         borderRadius: 8,
         backgroundColor: colors.burgundy,
+    },
+    detailsButtonPressed: {
+        backgroundColor: colors.burgundyDark,
+        transform: [{ scale: 0.95 }],
     }
 })

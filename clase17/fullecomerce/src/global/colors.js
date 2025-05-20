@@ -1,21 +1,20 @@
-/* export const colors = {
-    primary: '#FF6347', // Tomato
-    secondary: '#4682B4', // SteelBlue
-    background: '#F5F5F5', // LightGray
-    text: '#333333', // DarkGray
-    border: '#DDDDDD', // LightGray
-    accent: '#FFD700', // Gold
-    error: '#FF4500', // OrangeRed
-    success: '#32CD32', // LimeGreen
-    warning: '#FFA500', // Orange
-    info: '#1E90FF', // DodgerBlue
-} */
-
 export const colors = {
-  teal900: "#0D1B2A",
-  teal600: "#1B263B",
-  teal400: "#415A77",
-  teal200: "#778DA9",
-  platinum: "#E0E1DD",
-  burgundy: "#800020",
+  teal900: "#1A3C40",
+  teal800: "#2D5A5F",
+  teal600: "#4A7B7F",
+  teal400: "#7FB8BF",
+  teal200: "#B3E0E5",
+  platinum: "#E5E5E5",
+  burgundy: "#8C2F39",
+  burgundyDark: "#6B232B",
+  error: "#FF6B6B",
+  textHighContrast: "#FFFFFF",
+  textMediumContrast: "#E5E5E5",
+  textLowContrast: "#B3E0E5",
+  backgroundHighContrast: "#0A1A1C",
+  backgroundMediumContrast: "#1A3C40",
+  backgroundLowContrast: "#2D5A5F",
+  accentHighContrast: "#4A7B7F",
+  accentMediumContrast: "#7FB8BF",
+  accentLowContrast: "#B3E0E5",
 };

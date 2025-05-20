@@ -36,12 +36,12 @@ const BottomTabNavigator = () => {
               styles.iconContainer,
               focused && styles.activeIconContainer
             ]}>
-              <FontAwesome5
-                name="store"
+                <FontAwesome5
+                  name="store"
                 size={28}
                 color={color}
-              />
-            </View>
+                />
+              </View>
           ),
         }}
       />
@@ -72,12 +72,12 @@ const BottomTabNavigator = () => {
               styles.iconContainer,
               focused && styles.activeIconContainer
             ]}>
-              <FontAwesome6
-                name="clipboard-list"
+                <FontAwesome6
+                  name="clipboard-list"
                 size={28}
                 color={color}
-              />
-            </View>
+                />
+              </View>
           ),
         }}
       />
@@ -95,7 +95,7 @@ const BottomTabNavigator = () => {
                 size={28} 
                 color={color} 
               />
-            </View>
+              </View>
           ),
         }}
       />

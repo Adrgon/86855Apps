@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import OrdersScreen from '../screens/Orders'
+import Orders from '../screens/Orders'
+import OrderDetail from '../screens/OrderDetail'
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -13,7 +14,8 @@ const OrderStackNavigator = () => {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="OrdersScreen" component={OrdersScreen} />
+      <Stack.Screen name="Orders" component={Orders} />
+      <Stack.Screen name="OrderDetail" component={OrderDetail} />
     </Stack.Navigator>
   );
 }

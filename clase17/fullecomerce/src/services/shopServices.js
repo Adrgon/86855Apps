@@ -28,6 +28,10 @@ export const shopApi = createApi({
     }),
     getOrders: builder.query({
       query: () => `orders.json`,
+      transformResponse: (response) => {
+        const responseTransformed = Object.values(response);
+        return responseTransformed;
+      },
       providesTags: ["getOrders"],
     }),
     postOrder: builder.mutation({

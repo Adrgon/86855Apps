@@ -5,17 +5,24 @@ import { useGetProductByIdQuery } from '../services/shopServices';
 import { addCartItem } from '../features/Cart/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { colors } from '../global/colors';
+import Feather from "@expo/vector-icons/Feather";
 
 const ItemDetail = ({
   route,
   navigation
 }) => {
   const dispatch = useDispatch();
-  const { width, height } = useWindowDimensions();
+  const { width, height, scale } = useWindowDimensions();
   const isLandscape = width > height;
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(50)).current;
   const scaleAnim = useRef(new Animated.Value(1)).current;
+
+  // Función para calcular tamaños de texto dinámicos
+  const getDynamicFontSize = (baseSize) => {
+    const scaleFactor = Math.min(scale, 1.5); // Limitar el factor de escala a 1.5
+    return Math.round(baseSize * scaleFactor);
+  };
 
   const {productId: idSelected} = route.params
   const {data: product, error, isLoading} = useGetProductByIdQuery(idSelected);
@@ -58,7 +65,7 @@ const ItemDetail = ({
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={colors.teal400} />
+        <ActivityIndicator size="large" color={colors.accentHighContrast} />
       </View>
     );
   }
@@ -66,7 +73,9 @@ const ItemDetail = ({
   if (error) {
     return (
       <View style={styles.errorContainer}>
-        <Text style={styles.errorText}>Error al cargar el producto</Text>
+        <Text style={[styles.errorText, { fontSize: getDynamicFontSize(18) }]}>
+          Error al cargar el producto
+        </Text>
         <Pressable 
           style={({pressed}) => [
             styles.retryButton,
@@ -74,7 +83,9 @@ const ItemDetail = ({
           ]}
           onPress={() => navigation.goBack()}
         >
-          <Text style={styles.retryButtonText}>Reintentar</Text>
+          <Text style={[styles.retryButtonText, { fontSize: getDynamicFontSize(16) }]}>
+            Reintentar
+          </Text>
         </Pressable>
       </View>
     );
@@ -82,6 +93,20 @@ const ItemDetail = ({
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
+      <View style={styles.header}>
+        <Pressable 
+          style={({pressed}) => [
+            styles.backButton,
+            pressed && styles.backButtonPressed
+          ]}
+          onPress={() => navigation.goBack()}
+        >
+          <Feather name="arrow-left" size={getDynamicFontSize(24)} color={colors.textHighContrast} />
+        </Pressable>
+        <Text style={[styles.headerTitle, { fontSize: getDynamicFontSize(20) }]}>
+          Detalle del Producto
+        </Text>
+      </View>
       <Animated.View style={[
         styles.content,
         {
@@ -117,9 +142,15 @@ const ItemDetail = ({
             justifyContent: isLandscape ? 'center' : 'flex-start',
           }
         ]}>
-          <Text style={styles.title}>{product.title}</Text>
-          <Text style={styles.description}>{product.description}</Text>
-          <Text style={styles.price}>${product.price}</Text>
+          <Text style={[styles.title, { fontSize: getDynamicFontSize(28) }]}>
+            {product.title}
+          </Text>
+          <Text style={[styles.description, { fontSize: getDynamicFontSize(16) }]}>
+            {product.description}
+          </Text>
+          <Text style={[styles.price, { fontSize: getDynamicFontSize(24) }]}>
+            ${product.price}
+          </Text>
           <Pressable 
             style={({pressed}) => [
               styles.addToCartButton,
@@ -127,7 +158,9 @@ const ItemDetail = ({
             ]}
             onPress={handleAddCart}
           >
-            <Text style={styles.addToCartText}>Agregar al carrito</Text>
+            <Text style={[styles.addToCartText, { fontSize: getDynamicFontSize(16) }]}>
+              Agregar al carrito
+            </Text>
           </Pressable>
         </View>
       </Animated.View>
@@ -140,21 +173,41 @@ export default ItemDetail
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.teal900,
+    backgroundColor: colors.backgroundHighContrast,
   },
   scrollContent: {
     flexGrow: 1,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: colors.backgroundMediumContrast,
+  },
+  backButton: {
+    padding: 8,
+    borderRadius: 8,
+    backgroundColor: colors.accentHighContrast,
+    marginRight: 16,
+  },
+  backButtonPressed: {
+    backgroundColor: colors.accentMediumContrast,
+    transform: [{ scale: 0.95 }],
+  },
+  headerTitle: {
+    fontFamily: "Josefin",
+    color: colors.textHighContrast,
   },
   content: {
     flex: 1,
   },
   imageContainer: {
     aspectRatio: 1,
-    backgroundColor: colors.teal800,
+    backgroundColor: colors.backgroundMediumContrast,
     borderRadius: 12,
     overflow: 'hidden',
     elevation: 5,
-    shadowColor: colors.teal200,
+    shadowColor: colors.accentLowContrast,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
@@ -172,35 +225,31 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 28,
     fontFamily: "Josefin",
-    color: colors.platinum,
+    color: colors.textHighContrast,
     marginBottom: 12,
   },
   description: {
-    fontSize: 16,
-    color: colors.platinum,
+    color: colors.textMediumContrast,
     marginBottom: 20,
     lineHeight: 24,
   },
   price: {
-    fontSize: 24,
     fontFamily: "Josefin",
-    color: colors.teal400,
+    color: colors.accentHighContrast,
     marginBottom: 20,
   },
   addToCartButton: {
-    backgroundColor: colors.teal400,
+    backgroundColor: colors.accentHighContrast,
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',
   },
   addToCartButtonPressed: {
-    backgroundColor: colors.teal200,
+    backgroundColor: colors.accentMediumContrast,
   },
   addToCartText: {
-    color: colors.teal900,
-    fontSize: 16,
+    color: colors.textHighContrast,
     fontFamily: 'Josefin',
     fontWeight: 'bold',
   },
@@ -208,34 +257,32 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.teal900,
+    backgroundColor: colors.backgroundHighContrast,
   },
   errorContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.teal900,
+    backgroundColor: colors.backgroundHighContrast,
     padding: 20,
   },
   errorText: {
     color: colors.error,
-    fontSize: 18,
     marginBottom: 20,
     textAlign: 'center',
   },
   retryButton: {
-    backgroundColor: colors.teal400,
+    backgroundColor: colors.accentHighContrast,
     padding: 15,
     borderRadius: 8,
     minWidth: 120,
     alignItems: 'center',
   },
   retryButtonPressed: {
-    backgroundColor: colors.teal200,
+    backgroundColor: colors.accentMediumContrast,
   },
   retryButtonText: {
-    color: colors.teal900,
-    fontSize: 16,
+    color: colors.textHighContrast,
     fontFamily: 'Josefin',
     fontWeight: 'bold',
   },

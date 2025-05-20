@@ -17,18 +17,19 @@ const InputForm = ({
     <View style={styles.inputContainer}>
       <Text style={styles.subtitle}>{label}</Text>
       <TextInput
-        style ={styles.input}
+        style={styles.input}
         value={input}
         onChangeText={onChangeText}
         secureTextEntry={isSecure}
+        placeholderTextColor={colors.textMediumContrast}
       />
       {error ? 
-        <Text style = {styles.error}>
+        <Text style={styles.error}>
             {error}
         </Text>
         :
         null
-    }
+      }
     </View>
   )
 }
@@ -45,22 +46,28 @@ const styles = StyleSheet.create({
     subtitle: {
         width: '90%',
         fontSize: 16,
-        fontFamily: 'Josefin'
+        fontFamily: 'Josefin',
+        color: colors.textHighContrast,
+        marginBottom: 8,
     },
     error: {
-        paddintTop: 2,
-        fontSize: 16,
-        color: 'red',
+        paddingTop: 2,
+        fontSize: 14,
+        color: colors.error,
         fontFamily: 'Josefin',
         fontStyle: 'italic',
+        width: '90%',
     },
     input: {
         width: '90%',
         borderWidth: 0,
-        borderBottomWidth: 3,
-        borderBottomColor: colors.teal400,
-        padding: 2,
+        borderBottomWidth: 2,
+        borderBottomColor: colors.accentHighContrast,
+        padding: 8,
         fontFamily: 'Josefin',
-        fontSize: 14,
+        fontSize: 16,
+        color: colors.textHighContrast,
+        backgroundColor: colors.backgroundMediumContrast,
+        borderRadius: 8,
     }
 })

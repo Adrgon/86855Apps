@@ -42,19 +42,19 @@ const MyProfile = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Card style={styles.profileCard}>
-        {imageFromBase || imageCamera ? (
-          <Image
-            source={{ uri: imageFromBase?.image || imageCamera }}
-            style={styles.image}
-            resizeMode="cover"
-          />
-        ) : (
-          <Image
-            source={require(defaultImage)}
-            style={styles.image}
-            resizeMode="cover"
-          />
-        )}
+      {imageFromBase || imageCamera ? (
+        <Image
+          source={{ uri: imageFromBase?.image || imageCamera }}
+          style={styles.image}
+          resizeMode="cover"
+        />
+      ) : (
+        <Image
+          source={require(defaultImage)}
+          style={styles.image}
+          resizeMode="cover"
+        />
+      )}
         <View style={styles.buttonContainer}>
           <Pressable style={styles.button} onPress={launchCamera}>
             <Text style={styles.buttonText}>Cambiar Foto</Text>

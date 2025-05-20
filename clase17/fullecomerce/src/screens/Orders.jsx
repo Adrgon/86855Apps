@@ -25,6 +25,8 @@ const Orders = ({ navigation }) => {
     ]).start();
   }, []);
 
+  const keyExtractor = (item, index) => `order-${item.id || index}`;
+
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
@@ -84,9 +86,10 @@ const Orders = ({ navigation }) => {
       <Text style={styles.title}>Mis Órdenes</Text>
       <FlatList
         data={orders}
-        keyExtractor={(order) => order.id}
+        keyExtractor={keyExtractor}
         renderItem={({ item, index }) => (
           <Animated.View
+            key={keyExtractor(item, index)}
             style={{
               opacity: fadeAnim,
               transform: [

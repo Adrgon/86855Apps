@@ -20,10 +20,12 @@ const CartItem = memo(({cartItem}) => {
         <Text style={styles.brand}>{cartItem.brand}</Text>
         <Text style={styles.price}>${cartItem.price}</Text>
         <Text style={styles.quantity}>Cantidad: {cartItem.quantity}</Text>
+        <Pressable onPress={handleRemoveItem}>
+          <View style={styles.deleteButton}>
+            <Text style={styles.deleteButtonText}>Eliminar</Text>
+          </View>
+        </Pressable>
       </View>
-      <Pressable style={styles.deleteButton} onPress={handleRemoveItem}>
-        <Text style={styles.deleteButtonText}>Eliminar</Text>
-      </Pressable>
     </Card>
   );
 })

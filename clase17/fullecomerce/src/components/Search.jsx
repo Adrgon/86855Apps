@@ -15,13 +15,13 @@ const Search = ({onSearch = ()=>{}, error="", goBack=()=>{}}) => {
         </Pressable>
       </View>
       <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.input}
+      <TextInput
+        style={styles.input}
           placeholder="Buscar productos..."
           placeholderTextColor={colors.teal200}
-          value={keyword}
-          onChangeText={setKeyword}
-        />
+        value={keyword}
+        onChangeText={setKeyword}
+      />
         <View style={styles.buttonsContainer}>
           {keyword.length > 0 && (
             <Pressable 
@@ -32,14 +32,14 @@ const Search = ({onSearch = ()=>{}, error="", goBack=()=>{}}) => {
               }}
             >
               <Ionicons name="close-circle" size={24} color={colors.platinum} />
-            </Pressable>
+      </Pressable>
           )}
           <Pressable 
             style={styles.searchButton} 
             onPress={() => onSearch(keyword)}
           >
             <Ionicons name="search" size={24} color={colors.platinum} />
-          </Pressable>
+      </Pressable>
         </View>
       </View>
       {error ? <Text style={styles.errorText}>{error}</Text> : null}

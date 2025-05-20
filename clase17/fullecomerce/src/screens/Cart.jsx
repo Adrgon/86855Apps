@@ -143,17 +143,17 @@ const CartScreen = () => {
           >
             <Text style={styles.clearButtonText}>Vaciar carrito</Text>
           </Pressable>
-          <Pressable 
+        <Pressable 
             style={({pressed}) => [
               styles.checkoutButton,
               pressed && styles.checkoutButtonPressed
             ]}
             onPress={handleCheckout}
-          >
+        >
             <Text style={styles.checkoutButtonText}>Finalizar compra</Text>
-          </Pressable>
-        </View>
+        </Pressable>
       </View>
+    </View>
     </Animated.View>
   );
 };
